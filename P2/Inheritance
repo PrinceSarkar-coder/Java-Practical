@@ -1,0 +1,80 @@
+class Person {
+    private String name;       // private: only accessible via getter
+    protected int age;         // protected: accessible in subclasses
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() { return name; }
+
+    public void display() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+}
+
+// Single inheritance: Person -> Student
+class Student extends Person {
+    protected int rollNo;
+
+    Student(String name, int age, int rollNo) {
+        super(name, age);          // constructor chaining
+        this.rollNo = rollNo;
+    }
+
+    @Override
+    public void display() {
+        super.display();           // method reuse
+        System.out.println("Roll No: " + rollNo);
+    }
+}
+
+// Single inheritance: Person -> Faculty
+class Faculty extends Person {
+    private String department;
+
+    Faculty(String name, int age, String department) {
+        super(name, age);
+        this.department = department;
+    }
+
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Department: " + department);
+    }
+}
+
+// Multilevel inheritance: Person -> Student -> GraduateStudent
+class GraduateStudent extends Student {
+    private String thesis;
+
+    GraduateStudent(String name, int age, int rollNo, String thesis) {
+        super(name, age, rollNo);  // goes up to Student, then Person
+        this.thesis = thesis;
+    }
+
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Thesis: " + thesis);
+    }
+}
+
+public class Inheritance {
+    public static void main(String[] args) {
+        Student s = new Student("Prince", 20, 101);
+        Faculty f = new Faculty("Dr. Sharma", 45, "CSE");
+        GraduateStudent g = new GraduateStudent("Riya", 24, 201, "AI in Security");
+
+        s.display();
+        System.out.println("---");
+        f.display();
+        System.out.println("---");
+        g.display();
+
+        System.out.println("---");
+        System.out.println(g.getName());   // inherited public method
+    }
+}
